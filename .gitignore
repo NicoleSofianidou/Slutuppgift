@@ -1,0 +1,10 @@
+# Ignore build directories
+bin/
+obj/
+
+# Ignore other common MonoGame and Visual Studio files
+*.user
+*.suo
+*.tmp
+*.log
+*.vs/
