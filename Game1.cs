@@ -23,10 +23,12 @@ namespace MonoGame
        
         //BULLET
         Texture2D smallbulletTexture;
-        /*
-        Vector2 smallbulletPosition;
-        float smallbulletSpeed;
-        */
+        
+
+        //Shooting timer
+        float timeSinceLastShot = 0f;
+        float shootCooldown = 0.5f;
+        
         List<BulletList> Multiplebullets = new List<BulletList>();
 
         public Game1()
@@ -82,9 +84,10 @@ namespace MonoGame
                 }
 
                 // SHOOT BULLETS
-                if (kState.IsKeyDown(Keys.Space))
+                if (kState.IsKeyDown(Keys.Space) && timeSinceLastShot > shootCooldown)
                 {
                     Shoot();
+                    timeSinceLastShot = 0;
                 }
 
                 foreach (var smallbullet in Multiplebullets)
@@ -107,6 +110,9 @@ namespace MonoGame
                 }
 
                 alienPosition.X += alienSpeed; // Update alien position based on its speed
+
+                //Update shooting timer
+                timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 base.Update(gameTime);
             }
