@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\niso07001\\Programmering\\MonoGame\\MonoGame.csproj": {}
+    "C:\\Users\\niso07001\\Programmering\\Slutuppgift\\MonoGame.csproj": {}
   },
   "projects": {
-    "C:\\Users\\niso07001\\Programmering\\MonoGame\\MonoGame.csproj": {
+    "C:\\Users\\niso07001\\Programmering\\Slutuppgift\\MonoGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\niso07001\\Programmering\\MonoGame\\MonoGame.csproj",
+        "projectUniqueName": "C:\\Users\\niso07001\\Programmering\\Slutuppgift\\MonoGame.csproj",
         "projectName": "MonoGame",
-        "projectPath": "C:\\Users\\niso07001\\Programmering\\MonoGame\\MonoGame.csproj",
+        "projectPath": "C:\\Users\\niso07001\\Programmering\\Slutuppgift\\MonoGame.csproj",
         "packagesPath": "C:\\Users\\niso07001\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\niso07001\\Programmering\\MonoGame\\obj\\",
+        "outputPath": "C:\\Users\\niso07001\\Programmering\\Slutuppgift\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\niso07001\\AppData\\Roaming\\NuGet\\NuGet.Config"

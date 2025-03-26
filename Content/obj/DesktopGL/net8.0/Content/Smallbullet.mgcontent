@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/niso07001/Programmering/MonoGame/Content/Smallbullet.png</SourceFile>
+  <SourceFile>C:/Users/niso07001/Programmering/Slutuppgift/Content/Smallbullet.png</SourceFile>
   <SourceTime>2025-03-24T19:38:15.4632502+01:00</SourceTime>
-  <DestFile>C:/Users/niso07001/Programmering/MonoGame/Content/bin/DesktopGL/Content/Smallbullet.xnb</DestFile>
-  <DestTime>2025-03-24T19:42:48.4659074+01:00</DestTime>
+  <DestFile>C:/Users/niso07001/Programmering/Slutuppgift/Content/bin/DesktopGL/Content/Smallbullet.xnb</DestFile>
+  <DestTime>2025-03-24T20:09:46.4294326+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T19:05:56+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

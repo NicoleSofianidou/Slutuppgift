@@ -4,9 +4,9 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/niso07001/Programmering/MonoGame/Content/alien.png</File>
-    <File>C:/Users/niso07001/Programmering/MonoGame/Content/Smallbullet.png</File>
-    <File>C:/Users/niso07001/Programmering/MonoGame/Content/SpaceShipSmall.png</File>
+    <File>C:/Users/niso07001/Programmering/Slutuppgift/Content/alien.png</File>
+    <File>C:/Users/niso07001/Programmering/Slutuppgift/Content/Smallbullet.png</File>
+    <File>C:/Users/niso07001/Programmering/Slutuppgift/Content/SpaceShipSmall.png</File>
   </SourceFiles>
   <DestFiles>
     <File>Alien.png</File>
