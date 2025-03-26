@@ -148,7 +148,7 @@ namespace MonoGame
 
         void Shoot()
         {
-            Vector2 bulletPosition = new Vector2(spaceshipPosition.X + spaceshipTexture.Width / 2, spaceshipPosition.Y);
+            Vector2 bulletPosition = new Vector2(spaceshipPosition.X + spaceshipTexture.Width/2 - smallbulletTexture.Width/2, _graphics.PreferredBackBufferHeight - 20 - spaceshipTexture.Height - smallbulletTexture.Height);
             Vector2 bulletVelocity = new Vector2(0, -5);  // Bullets move upwards
 
             Multiplebullets.Add(new BulletList(smallbulletTexture, bulletPosition, bulletVelocity));
