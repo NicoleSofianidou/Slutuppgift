@@ -55,3 +55,4 @@ C:\Users\niso07001\Programmering\Slutuppgift\obj\Debug\net8.0\refint\MonoGame.dl
 C:\Users\niso07001\Programmering\Slutuppgift\obj\Debug\net8.0\MonoGame.pdb
 C:\Users\niso07001\Programmering\Slutuppgift\obj\Debug\net8.0\MonoGame.genruntimeconfig.cache
 C:\Users\niso07001\Programmering\Slutuppgift\obj\Debug\net8.0\ref\MonoGame.dll
+C:\Users\niso07001\Programmering\Slutuppgift\bin\Debug\net8.0\Content\Background.xnb

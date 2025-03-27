@@ -25,12 +25,16 @@ namespace MonoGame
         Texture2D smallbulletTexture;
         
 
-        //Shooting timer
+        //SHOOTING TIMER
         float timeSinceLastShot = 0f;
         float shootCooldown = 0.5f;
         
         List<BulletList> Multiplebullets = new List<BulletList>();
 
+        //BACKGROUND
+        Texture2D backgroundTexture;
+        float backgroundPositionY = 0f;
+        float backgroundScrollSpeed = 1f;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -63,6 +67,7 @@ namespace MonoGame
             spaceshipTexture = Content.Load<Texture2D>("SpaceShipSmall");
             alienTexture = Content.Load<Texture2D>("Alien");
             smallbulletTexture = Content.Load<Texture2D>("Smallbullet");
+            backgroundTexture = Content.Load<Texture2D>("Background");
 
             // TODO: use this.Content to load your game content here
         }
@@ -115,6 +120,13 @@ namespace MonoGame
                 timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 base.Update(gameTime);
+
+                //BACKGROUND
+                backgroundPositionY += backgroundScrollSpeed;
+                if (backgroundPositionY >= _graphics.PreferredBackBufferHeight)
+                {
+                    backgroundPositionY = 0;
+                }
             }
             catch (Exception ex)
             {
@@ -127,19 +139,29 @@ namespace MonoGame
         {
             try
             {
-                GraphicsDevice.Clear(Color.CornflowerBlue);
+                GraphicsDevice.Clear(Color.DarkBlue);
 
                 // Draw all sprites
                 _spriteBatch.Begin();
+
+                //Define size and draw background
+                Rectangle backgroundRectangle = new Rectangle(0, (int)backgroundPositionY, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+                Rectangle backgroundRectangleAbove = new Rectangle(0, (int)backgroundPositionY - _graphics.PreferredBackBufferHeight, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+                _spriteBatch.Draw(backgroundTexture, backgroundRectangle,Color.White);
+                _spriteBatch.Draw(backgroundTexture, backgroundRectangleAbove, Color.White);
+
                 _spriteBatch.Draw(spaceshipTexture, new Vector2(spaceshipPosition.X, _graphics.PreferredBackBufferHeight - 20 - spaceshipTexture.Height), Color.White);
                 _spriteBatch.Draw(alienTexture, new Vector2(alienPosition.X, 10), Color.White);
-
 
                 foreach (var smallbullet in Multiplebullets)
                 {
                     smallbullet.Draw(_spriteBatch);
                 }
+
+              
+    
                 _spriteBatch.End();
+
 
                 base.Draw(gameTime);
             }
