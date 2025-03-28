@@ -54,7 +54,7 @@ namespace MonoGame
             alienPosition = new Vector2(0, 0);
             alienSpeed = 3f;
 
-            spaceshipPosition = new Vector2(0,100);
+            spaceshipPosition = new Vector2(0,300);
             spaceshipSpeed = 3f;
             base.Initialize();
         }
@@ -63,7 +63,7 @@ namespace MonoGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            spaceshipTexture = Content.Load<Texture2D>("SpaceShipSmall");
+            spaceshipTexture = Content.Load<Texture2D>("SpaceShip");
             alienTexture = Content.Load<Texture2D>("Alien");
             smallbulletTexture = Content.Load<Texture2D>("Smallbullet");
             backgroundTexture = Content.Load<Texture2D>("Background");
@@ -145,11 +145,14 @@ namespace MonoGame
 
                 //Define size and draw background
                 Rectangle backgroundRectangle = new Rectangle(0, (int)backgroundPositionY, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+
                 Rectangle backgroundRectangleAbove = new Rectangle(0, (int)backgroundPositionY - _graphics.PreferredBackBufferHeight, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+
                 _spriteBatch.Draw(backgroundTexture, backgroundRectangle,Color.White);
+
                 _spriteBatch.Draw(backgroundTexture, backgroundRectangleAbove, Color.White);
 
-                _spriteBatch.Draw(spaceshipTexture, new Vector2(spaceshipPosition.X, _graphics.PreferredBackBufferHeight - 20 - spaceshipTexture.Height), Color.White);
+
                 _spriteBatch.Draw(alienTexture, new Vector2(alienPosition.X, 10), Color.White);
 
                 foreach (var smallbullet in Multiplebullets)
@@ -157,6 +160,7 @@ namespace MonoGame
                     smallbullet.Draw(_spriteBatch);
                 }
 
+                _spriteBatch.Draw(spaceshipTexture, new Vector2(spaceshipPosition.X, _graphics.PreferredBackBufferHeight - 1 - spaceshipTexture.Height + 40), Color.White);
               
     
                 _spriteBatch.End();
@@ -175,7 +179,7 @@ namespace MonoGame
 
         void Shoot()
         {
-            Vector2 bulletPosition = new Vector2(spaceshipPosition.X + spaceshipTexture.Width/2 - smallbulletTexture.Width/2, _graphics.PreferredBackBufferHeight - 20 - spaceshipTexture.Height - smallbulletTexture.Height);
+            Vector2 bulletPosition = new Vector2(spaceshipPosition.X + spaceshipTexture.Width/2 - smallbulletTexture.Width/2, _graphics.PreferredBackBufferHeight + 95 - spaceshipTexture.Height - smallbulletTexture.Height);
             Vector2 bulletVelocity = new Vector2(0, -5);  // Bullets move upwards
 
             Multiplebullets.Add(new BulletList(smallbulletTexture, bulletPosition, bulletVelocity));
