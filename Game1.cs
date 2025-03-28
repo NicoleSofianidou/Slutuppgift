@@ -23,7 +23,6 @@ namespace MonoGame
        
         //BULLET
         Texture2D smallbulletTexture;
-        
 
         //SHOOTING TIMER
         float timeSinceLastShot = 0f;
