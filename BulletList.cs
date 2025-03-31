@@ -6,22 +6,22 @@ namespace Slutuppgift
     public class BulletList
     {
         private Texture2D texture;
-        private Vector2 position;
+        private Vector2 bulletPosition;
         private Vector2 velocity;
         public bool IsActive { get; private set; }
 
         public BulletList(Texture2D texture, Vector2 position, Vector2 velocity)
         {
             this.texture = texture;
-            this.position = position;
+            this.bulletPosition = position;
             this.velocity = velocity;
             IsActive = true;
         }
 
         public void Update()
         {
-            position += velocity;
-            if (position.Y < 0)
+            bulletPosition += velocity;
+            if (bulletPosition.Y < 0)
             {
                 IsActive = false;
             }
@@ -29,7 +29,7 @@ namespace Slutuppgift
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.Draw(texture, bulletPosition, Color.White);
         }
     }
 }

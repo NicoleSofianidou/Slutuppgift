@@ -13,50 +13,54 @@ namespace MonoGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+
         // SPACESHIP
         Texture2D spaceshipTexture;
         Vector2 spaceshipPosition;
         float spaceshipSpeed;
+
 
         // ALIEN
         Texture2D alienTexture;
         Vector2 alienPosition;
         float alienSpeed;
        
+
         //BULLET
         Texture2D bulletTexture;
-    
 
-        //SHOOTING TIMER
+        //Shooting
         float timeSinceLastShot = 0f;
         float shootCooldown = 0.5f;
-        
         List<BulletList> Multiplebullets = new List<BulletList>();
+
 
         //BACKGROUND
         Texture2D backgroundTexture;
         float backgroundPositionY = 0f;
         float backgroundScrollSpeed = 2f;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            // Set the screen size
-            _graphics.PreferredBackBufferWidth = 1200;  // Width of the window
-            _graphics.PreferredBackBufferHeight = 700; // Height of the window
+
+            //Setting the screen size
+            _graphics.PreferredBackBufferWidth = 1400; 
+            _graphics.PreferredBackBufferHeight = 800;
+
             _graphics.ApplyChanges();
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            Console.WriteLine("Initialized called");
 
             //ALIEN
             alienPosition = new Vector2(0, 0);
             alienSpeed = 2f;
+
 
             //SPACESHIP
             spaceshipPosition = new Vector2(0,300);
@@ -70,12 +74,15 @@ namespace MonoGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            spaceshipTexture = Content.Load<Texture2D>("SpaceShip");
-            alienTexture = Content.Load<Texture2D>("Alien");
-            bulletTexture = Content.Load<Texture2D>("Smallbullet");
-            backgroundTexture = Content.Load<Texture2D>("Background");
 
-            // TODO: use this.Content to load your game content here
+            //Load game textures/sprites
+            spaceshipTexture = Content.Load<Texture2D>("SpaceShip");
+
+            alienTexture = Content.Load<Texture2D>("Alien");
+
+            bulletTexture = Content.Load<Texture2D>("Smallbullet");
+
+            backgroundTexture = Content.Load<Texture2D>("Background");
         }
 
         protected override void Update(GameTime gameTime)
@@ -84,19 +91,25 @@ namespace MonoGame
             {
                 KeyboardState kState = Keyboard.GetState();
 
+
                 // SPACESHIP
+
+                //If left arrow key is pressed, move the spaceship left
                 if (kState.IsKeyDown(Keys.Left))
                 {
                     spaceshipPosition.X -= spaceshipSpeed;
                 }
+                //If right arrow key is pressed, move the spaceship right
                 if (kState.IsKeyDown(Keys.Right))
                 {
                     spaceshipPosition.X += spaceshipSpeed;
                 }
+                //If spaceship is at the right edge of the screen, it can't move more to the rigth
                 if (spaceshipPosition.X + spaceshipTexture.Width > _graphics.PreferredBackBufferWidth)
                 {
                     spaceshipPosition.X = _graphics.PreferredBackBufferWidth - spaceshipTexture.Width;
                 }
+                //If spaceship is at the left edge of the screen, it can't move more to the left
                 if (spaceshipPosition.X < 0)
                 {
                     spaceshipPosition.X = 0;
@@ -120,10 +133,12 @@ namespace MonoGame
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                     Exit();
 
+                //When alien reaches the right edge of the screen, it bounces back and moves left
                 if (alienPosition.X + alienTexture.Width >= _graphics.PreferredBackBufferWidth)
                 {
                     alienSpeed *= -1;
                 }
+                //When alien reaches the left edge of the screen, it bounces back and moves right
                 if (alienPosition.X < 0)
                 {
                     alienSpeed *= -1;
@@ -131,13 +146,14 @@ namespace MonoGame
 
                 alienPosition.X += alienSpeed; // Update alien position based on its speed
 
-                //Update shooting timer
-                timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                
+                timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalSeconds; //Update shooting timer
 
                 base.Update(gameTime);
 
                 //BACKGROUND
                 backgroundPositionY += backgroundScrollSpeed;
+                // Reset the background position when it goes off-screen
                 if (backgroundPositionY >= _graphics.PreferredBackBufferHeight)
                 {
                     backgroundPositionY = 0;
@@ -197,8 +213,8 @@ namespace MonoGame
 
         void Shoot()
         {
-            Vector2 bulletPosition = new Vector2(spaceshipPosition.X + spaceshipTexture.Width/2 - bulletTexture.Width/2, _graphics.PreferredBackBufferHeight + bulletTexture.Height - spaceshipTexture.Height - bulletTexture.Height);
-            Vector2 bulletVelocity = new Vector2(0, -8);  
+            Vector2 bulletPosition = new Vector2(spaceshipPosition.X + spaceshipTexture.Width/2 - bulletTexture.Width/2, _graphics.PreferredBackBufferHeight + bulletTexture.Height - spaceshipTexture.Height - bulletTexture.Height); //Sets bullets position to the middle of the spaceship
+            Vector2 bulletVelocity = new Vector2(0, -12); //Sets the bullets velocity/speed to move up
             Multiplebullets.Add(new BulletList(bulletTexture, bulletPosition, bulletVelocity));
         }
   
