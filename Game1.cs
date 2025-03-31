@@ -1,8 +1,10 @@
 ﻿using System;
+using MonoGame;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Slutuppgift;
 
 namespace MonoGame
 {
@@ -22,7 +24,8 @@ namespace MonoGame
         float alienSpeed;
        
         //BULLET
-        Texture2D smallbulletTexture;
+        Texture2D bulletTexture;
+    
 
         //SHOOTING TIMER
         float timeSinceLastShot = 0f;
@@ -33,7 +36,7 @@ namespace MonoGame
         //BACKGROUND
         Texture2D backgroundTexture;
         float backgroundPositionY = 0f;
-        float backgroundScrollSpeed = 1f;
+        float backgroundScrollSpeed = 2f;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -51,12 +54,16 @@ namespace MonoGame
             // TODO: Add your initialization logic here
             Console.WriteLine("Initialized called");
 
+            //ALIEN
             alienPosition = new Vector2(0, 0);
-            alienSpeed = 3f;
+            alienSpeed = 2f;
 
+            //SPACESHIP
             spaceshipPosition = new Vector2(0,300);
             spaceshipSpeed = 3f;
+
             base.Initialize();
+
         }
 
         protected override void LoadContent()
@@ -65,7 +72,7 @@ namespace MonoGame
 
             spaceshipTexture = Content.Load<Texture2D>("SpaceShip");
             alienTexture = Content.Load<Texture2D>("Alien");
-            smallbulletTexture = Content.Load<Texture2D>("Smallbullet");
+            bulletTexture = Content.Load<Texture2D>("Smallbullet");
             backgroundTexture = Content.Load<Texture2D>("Background");
 
             // TODO: use this.Content to load your game content here
@@ -86,20 +93,29 @@ namespace MonoGame
                 {
                     spaceshipPosition.X += spaceshipSpeed;
                 }
-
-                // SHOOT BULLETS
+                if (spaceshipPosition.X + spaceshipTexture.Width > _graphics.PreferredBackBufferWidth)
+                {
+                    spaceshipPosition.X = _graphics.PreferredBackBufferWidth - spaceshipTexture.Width;
+                }
+                if (spaceshipPosition.X < 0)
+                {
+                    spaceshipPosition.X = 0;
+                }
+               
+                //BULLETS
                 if (kState.IsKeyDown(Keys.Space) && timeSinceLastShot > shootCooldown)
                 {
                     Shoot();
                     timeSinceLastShot = 0;
                 }
 
-                foreach (var smallbullet in Multiplebullets)
+                foreach (var bullet in Multiplebullets)
                 {
-                    smallbullet.Update();
+                    bullet.Update();
                 }
 
                 Multiplebullets.RemoveAll(b => !b.IsActive); // Remove inactive bullets
+
                 // ALIEN
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                     Exit();
@@ -143,7 +159,7 @@ namespace MonoGame
                 // Draw all sprites
                 _spriteBatch.Begin();
 
-                //Define size and draw background
+                //BACKGROUND
                 Rectangle backgroundRectangle = new Rectangle(0, (int)backgroundPositionY, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
 
                 Rectangle backgroundRectangleAbove = new Rectangle(0, (int)backgroundPositionY - _graphics.PreferredBackBufferHeight, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
@@ -152,15 +168,17 @@ namespace MonoGame
 
                 _spriteBatch.Draw(backgroundTexture, backgroundRectangleAbove, Color.White);
 
-
+                //ALIEN
                 _spriteBatch.Draw(alienTexture, new Vector2(alienPosition.X, 10), Color.White);
 
-                foreach (var smallbullet in Multiplebullets)
+                //BULLET
+                foreach (var bullet in Multiplebullets)
                 {
-                    smallbullet.Draw(_spriteBatch);
+                    bullet.Draw(_spriteBatch);
                 }
 
-                _spriteBatch.Draw(spaceshipTexture, new Vector2(spaceshipPosition.X, _graphics.PreferredBackBufferHeight - 1 - spaceshipTexture.Height + 40), Color.White);
+                //SPACESHIP
+                _spriteBatch.Draw(spaceshipTexture, new Vector2(spaceshipPosition.X, _graphics.PreferredBackBufferHeight - 1 - spaceshipTexture.Height), Color.White);
               
     
                 _spriteBatch.End();
@@ -179,40 +197,13 @@ namespace MonoGame
 
         void Shoot()
         {
-            Vector2 bulletPosition = new Vector2(spaceshipPosition.X + spaceshipTexture.Width/2 - smallbulletTexture.Width/2, _graphics.PreferredBackBufferHeight + 95 - spaceshipTexture.Height - smallbulletTexture.Height);
-            Vector2 bulletVelocity = new Vector2(0, -5);  // Bullets move upwards
-
-            Multiplebullets.Add(new BulletList(smallbulletTexture, bulletPosition, bulletVelocity));
+            Vector2 bulletPosition = new Vector2(spaceshipPosition.X + spaceshipTexture.Width/2 - bulletTexture.Width/2, _graphics.PreferredBackBufferHeight + bulletTexture.Height - spaceshipTexture.Height - bulletTexture.Height);
+            Vector2 bulletVelocity = new Vector2(0, -8);  
+            Multiplebullets.Add(new BulletList(bulletTexture, bulletPosition, bulletVelocity));
         }
+  
+
+          
     }
 
-    public class BulletList
-    {
-        private Texture2D texture;
-        private Vector2 position;
-        private Vector2 velocity;
-        public bool IsActive { get; private set; }
-
-        public BulletList(Texture2D texture, Vector2 position, Vector2 velocity)
-        {
-            this.texture = texture;
-            this.position = position;
-            this.velocity = velocity;
-            IsActive = true;
-        }
-
-        public void Update()
-        {
-            position += velocity;
-            if (position.Y < 0)
-            {
-                IsActive = false;
-            }
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(texture, position, Color.White);
-        }
-    }
 }
