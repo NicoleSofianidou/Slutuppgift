@@ -127,12 +127,27 @@ namespace MonoGame
                     bullet.Update();
                 }
 
+                
+                // Check for collisions between bullets and the alien
+                Rectangle alienRectangle = new Rectangle((int)alienPosition.X, 10, alienTexture.Width, alienTexture.Height);
+
+                foreach (var bullet in Multiplebullets)
+                {
+                    Rectangle bulletRectangle = new Rectangle((int)bullet.bulletPosition.X, (int)bullet.bulletPosition.Y, bulletTexture.Width, bulletTexture.Height);
+
+                    if (bulletRectangle.Intersects(alienRectangle))
+                    {
+                        // Handle collision (e.g., remove bullet, destroy alien, etc.)
+                        bullet.IsActive = false; // Mark bullet as inactive
+                        alienPosition.X = 0;
+                        // You can add logic here to reduce alien health or destroy it
+                    }
+                }
+
+
                 Multiplebullets.RemoveAll(b => !b.IsActive); // Remove inactive bullets
 
                 // ALIEN
-                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                    Exit();
-
                 //When alien reaches the right edge of the screen, it bounces back and moves left
                 if (alienPosition.X + alienTexture.Width >= _graphics.PreferredBackBufferWidth)
                 {
@@ -158,6 +173,9 @@ namespace MonoGame
                 {
                     backgroundPositionY = 0;
                 }
+
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    Exit();
             }
             catch (Exception ex)
             {

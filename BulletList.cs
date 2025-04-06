@@ -6,9 +6,9 @@ namespace Slutuppgift
     public class BulletList
     {
         private Texture2D texture;
-        private Vector2 bulletPosition;
+        public Vector2 bulletPosition;
         private Vector2 velocity;
-        public bool IsActive { get; private set; }
+        public bool IsActive { get; set; }
 
         public BulletList(Texture2D texture, Vector2 position, Vector2 velocity)
         {
