@@ -3,14 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Slutuppgift
 {
-    public class BulletList
+    public class Bulletclass
     {
         private Texture2D texture;
         public Vector2 bulletPosition;
         private Vector2 velocity;
         public bool IsActive { get; set; }
 
-        public BulletList(Texture2D texture, Vector2 position, Vector2 velocity)
+        public Bulletclass(Texture2D texture, Vector2 position, Vector2 velocity)
         {
             this.texture = texture;
             this.bulletPosition = position;

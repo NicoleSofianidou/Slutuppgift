@@ -20,10 +20,10 @@ namespace MonoGame
         float spaceshipSpeed;
 
 
-        // ALIEN
-        Texture2D alienTexture;
-        Vector2 alienPosition;
-        float alienSpeed;
+        // UFO
+        Texture2D ufoTexture;
+        Vector2 ufoPosition;
+        float ufoSpeed;
        
 
         //BULLET
@@ -32,7 +32,7 @@ namespace MonoGame
         //Shooting
         float timeSinceLastShot = 0f;
         float shootCooldown = 0.5f;
-        List<BulletList> Multiplebullets = new List<BulletList>();
+        List<Bulletclass> Multiplebullets = new List<Bulletclass>();
 
 
         //BACKGROUND
@@ -57,9 +57,9 @@ namespace MonoGame
         protected override void Initialize()
         {
 
-            //ALIEN
-            alienPosition = new Vector2(0, 0);
-            alienSpeed = 2f;
+            //UFO
+            ufoPosition = new Vector2(0, 0);
+            ufoSpeed = 2f;
 
 
             //SPACESHIP
@@ -78,7 +78,7 @@ namespace MonoGame
             //Load game textures/sprites
             spaceshipTexture = Content.Load<Texture2D>("SpaceShip");
 
-            alienTexture = Content.Load<Texture2D>("UFO");
+            ufoTexture = Content.Load<Texture2D>("UFO");
 
             bulletTexture = Content.Load<Texture2D>("Smallbullet");
 
@@ -128,39 +128,40 @@ namespace MonoGame
                 }
 
                 
-                // Check for collisions between bullets and the alien
-                Rectangle alienRectangle = new Rectangle((int)alienPosition.X, 10, alienTexture.Width, alienTexture.Height);
+                // Collision detection between bullets and UFO
+                Rectangle ufoRectangle = new Rectangle((int)ufoPosition.X, 10, ufoTexture.Width, ufoTexture.Height); // Create bounding box for UFO
 
                 foreach (var bullet in Multiplebullets)
                 {
-                    Rectangle bulletRectangle = new Rectangle((int)bullet.bulletPosition.X, (int)bullet.bulletPosition.Y, bulletTexture.Width, bulletTexture.Height);
+                    Rectangle bulletRectangle = new Rectangle((int)bullet.bulletPosition.X, (int)bullet.bulletPosition.Y, bulletTexture.Width, bulletTexture.Height); // Create bounding box for bullet
 
-                    if (bulletRectangle.Intersects(alienRectangle))
+                    if (bulletRectangle.Intersects(ufoRectangle))
                     {
-                        // Handle collision (e.g., remove bullet, destroy alien, etc.)
+                        // Handle collision and set the ufo to its initial position
                         bullet.IsActive = false; // Mark bullet as inactive
-                        alienPosition.X = 0;
-                        // You can add logic here to reduce alien health or destroy it
+                        ufoPosition.X = 0;
                     }
                 }
 
 
                 Multiplebullets.RemoveAll(b => !b.IsActive); // Remove inactive bullets
 
-                // ALIEN
-                //When alien reaches the right edge of the screen, it bounces back and moves left
-                if (alienPosition.X + alienTexture.Width >= _graphics.PreferredBackBufferWidth)
+                // UFO
+
+                ufoPosition.X += ufoSpeed; // Update ufo position based on its speed
+
+                //When ufo reaches the right edge of the screen, it bounces back and moves left
+                if (ufoPosition.X + ufoTexture.Width >= _graphics.PreferredBackBufferWidth)
                 {
-                    alienSpeed *= -1;
+                    ufoSpeed *= -1;
                 }
-                //When alien reaches the left edge of the screen, it bounces back and moves right
-                if (alienPosition.X < 0)
+                //When ufo reaches the left edge of the screen, it bounces back and moves right
+                if (ufoPosition.X < 0)
                 {
-                    alienSpeed *= -1;
+                    ufoSpeed *= -1;
                 }
 
-                alienPosition.X += alienSpeed; // Update alien position based on its speed
-
+                
                 
                 timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalSeconds; //Update shooting timer
 
@@ -202,8 +203,8 @@ namespace MonoGame
 
                 _spriteBatch.Draw(backgroundTexture, backgroundRectangleAbove, Color.White);
 
-                //ALIEN
-                _spriteBatch.Draw(alienTexture, new Vector2(alienPosition.X, 10), Color.White);
+                //UFO
+                _spriteBatch.Draw(ufoTexture, new Vector2(ufoPosition.X, 10), Color.White);
 
                 //BULLET
                 foreach (var bullet in Multiplebullets)
@@ -233,7 +234,7 @@ namespace MonoGame
         {
             Vector2 bulletPosition = new Vector2(spaceshipPosition.X + spaceshipTexture.Width/2 - bulletTexture.Width/2, _graphics.PreferredBackBufferHeight + bulletTexture.Height - spaceshipTexture.Height - bulletTexture.Height); //Sets bullets position to the middle of the spaceship
             Vector2 bulletVelocity = new Vector2(0, -12); //Sets the bullets velocity/speed to move
-            Multiplebullets.Add(new BulletList(bulletTexture, bulletPosition, bulletVelocity));
+            Multiplebullets.Add(new Bulletclass(bulletTexture, bulletPosition, bulletVelocity));
         }
   
 
