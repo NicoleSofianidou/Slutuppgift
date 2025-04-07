@@ -4,13 +4,13 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/niso07001/Programmering/Slutuppgift/Content/alien.png</File>
     <File>C:/Users/niso07001/Programmering/Slutuppgift/Content/Background.jpg</File>
     <File>C:/Users/niso07001/Programmering/Slutuppgift/Content/Smallbullet.png</File>
     <File>C:/Users/niso07001/Programmering/Slutuppgift/Content/SpaceShip.png</File>
+    <File>C:/Users/niso07001/Programmering/Slutuppgift/Content/UFO.png</File>
   </SourceFiles>
   <DestFiles>
-    <File>Alien.png</File>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

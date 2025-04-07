@@ -78,7 +78,7 @@ namespace MonoGame
             //Load game textures/sprites
             spaceshipTexture = Content.Load<Texture2D>("SpaceShip");
 
-            alienTexture = Content.Load<Texture2D>("Alien");
+            alienTexture = Content.Load<Texture2D>("UFO");
 
             bulletTexture = Content.Load<Texture2D>("Smallbullet");
 
